@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault dApp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vault dApp</h1>
+        <button onclick="connectWallet()">Connect Wallet</button>
+        <p id="wallet-address">Not connected</p>
+
+        <h2>Deposit USDC</h2>
+        <input type="number" id="deposit-amount" placeholder="Amount in USDC">
+        <button onclick="depositUSDC(document.getElementById('deposit-amount').value)">Deposit</button>
+
+        <h2>Withdraw USDC</h2>
+        <input type="number" id="withdraw-amount" placeholder="Amount in USDC">
+        <button onclick="withdrawUSDC(document.getElementById('withdraw-amount').value)">Withdraw</button>
+
+        <h2>Your Info</h2>
+        <p id="user-deposit">Your Deposit: </p>
+        <p id="deposit-timestamp">Deposit Timestamp: </p>
+        <button onclick="getUserDeposit()">Get Deposit Info</button>
+        <button onclick="getUserDepositTimestamp()">Get Deposit Timestamp</button>
+    </div>
+
+    <!-- Include Web3.js -->
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.5.2/dist/web3.min.js"></script>
+    <!-- Include your web3.js script -->
+    <script src="web3.js"></script>
+</body>
+</html>
