@@ -1,468 +1,93 @@
 // web3.js
 
-// Ensure you've set the contract ABI and address here
-const contractABI = [ [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			}
-		],
-		"name": "OwnableInvalidOwner",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "account",
-				"type": "address"
-			}
-		],
-		"name": "OwnableUnauthorizedAccount",
-		"type": "error"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "Deposited",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "oldVault",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newVault",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "VaultChanged",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "interest",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "timestamp",
-				"type": "uint256"
-			}
-		],
-		"name": "Withdrawn",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "DELAY",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "INTEREST_RATE",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "applyVault",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "delayVault",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "deposit",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "depositTimestamps",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "deposits",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			}
-		],
-		"name": "getDeposit",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			}
-		],
-		"name": "getDepositTimestamp",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "pendingVault",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_vault",
-				"type": "address"
-			}
-		],
-		"name": "setPendingVault",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "usdc",
-		"outputs": [
-			{
-				"internalType": "contract IERC20",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "vault",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			}
-		],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
-] ];
-const contractAddress = "0x4Be0933bB8d6C915e87E7B0dec723a20Bc2a119e"; // Your contract address
-
-const usdcABI = [ [{"inputs":[{"internalType":"address","name":"_proxyTo","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"address","name":"_new","type":"address"},{"indexed":false,"internalType":"address","name":"_old","type":"address"}],"name":"ProxyOwnerUpdate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_new","type":"address"},{"indexed":true,"internalType":"address","name":"_old","type":"address"}],"name":"ProxyUpdated","type":"event"},{"stateMutability":"payable","type":"fallback"},{"inputs":[],"name":"IMPLEMENTATION_SLOT","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"OWNER_SLOT","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"implementation","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"proxyType","outputs":[{"internalType":"uint256","name":"proxyTypeId","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferProxyOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_newProxyTo","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"updateAndCall","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"_newProxyTo","type":"address"}],"name":"updateImplementation","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}] ]; // USDC ERC20 token ABI
-const usdcAddress = 0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174; // USDC token contract address on Polygon
-
 let web3;
-let contract;
+let vaultContract;
+let userAccount;
+const vaultAddress = "0x4Be0933bB8d6C915e87E7B0dec723a20Bc2a119e"; // Your contract address
 
-// Initialize web3 and contract
-async function init() {
+const vaultABI = [
+    // Your contract ABI goes here...
+    // Example: Add only a few entries for clarity:
+    {
+        "inputs": [],
+        "name": "applyVault",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "deposit",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    // ... rest of the ABI
+];
+
+async function connectWallet() {
     if (window.ethereum) {
         web3 = new Web3(window.ethereum);
-        await window.ethereum.enable();
-        contract = new web3.eth.Contract(contractABI, contractAddress);
+        try {
+            // Request account access
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            // Get the user's account
+            const accounts = await web3.eth.getAccounts();
+            userAccount = accounts[0];
+            console.log("Connected account:", userAccount);
+            document.getElementById('wallet-address').innerText = userAccount;
+
+            // Show deposit and withdraw sections
+            document.getElementById('deposit-section').style.display = 'block';
+            document.getElementById('withdraw-section').style.display = 'block';
+
+            // Initialize the contract
+            vaultContract = new web3.eth.Contract(vaultABI, vaultAddress);
+        } catch (error) {
+            console.error("User denied account access", error);
+        }
     } else {
-        alert("Please install MetaMask!");
+        alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
     }
 }
 
-// Approve USDC for the contract
-async function approveUSDC(amount) {
-    const usdcContract = new web3.eth.Contract(usdcABI, usdcAddress);
-    const accounts = await web3.eth.getAccounts();
-    const approveAmount = web3.utils.toWei(amount, 'mwei'); // Convert to USDC decimals (6 decimals)
-    try {
-        await usdcContract.methods.approve(contractAddress, approveAmount).send({ from: accounts[0] });
-        alert("USDC approved for spending!");
-    } catch (error) {
-        console.error("Error approving USDC:", error);
-        alert("Failed to approve USDC! Error: " + error.message);
-    }
-}
-
-// Deposit USDC into the Vault
-async function depositUSDC(amount) {
-    if (contract) {
+async function depositUSDC() {
+    const amount = document.getElementById('depositAmount').value;
+    if (amount > 0) {
         try {
-            const accounts = await web3.eth.getAccounts();
-            const depositAmount = web3.utils.toWei(amount, 'mwei'); // USDC typically uses 6 decimals
-            await contract.methods.deposit(depositAmount).send({ from: accounts[0] });
-            alert("Deposit successful!");
+            await vaultContract.methods.deposit(web3.utils.toWei(amount, "ether")).send({ from: userAccount });
+            document.getElementById('deposit-status').innerText = "Deposit successful!";
         } catch (error) {
-            console.error("Error depositing:", error);
-            alert("Failed to deposit! Error: " + error.message);
+            console.error("Deposit failed", error);
+            document.getElementById('deposit-status').innerText = "Deposit failed. Check console for details.";
         }
+    } else {
+        alert("Please enter a valid amount to deposit.");
     }
 }
 
-// Check USDC balance of the user
-async function checkUSDCBalance() {
-    const usdcContract = new web3.eth.Contract(usdcABI, usdcAddress);
-    const accounts = await web3.eth.getAccounts();
-    try {
-        const balance = await usdcContract.methods.balanceOf(accounts[0]).call();
-        return web3.utils.fromWei(balance, 'mwei'); // Convert to human-readable format
-    } catch (error) {
-        console.error("Error checking USDC balance:", error);
-        alert("Failed to check USDC balance! Error: " + error.message);
-        return "0";
-    }
-}
-
-// Get deposit amount for the user
-async function getDeposit() {
-    if (contract) {
+async function withdrawUSDC() {
+    const amount = document.getElementById('withdrawAmount').value;
+    if (amount > 0) {
         try {
-            const accounts = await web3.eth.getAccounts();
-            const deposit = await contract.methods.getDeposit(accounts[0]).call();
-            return web3.utils.fromWei(deposit, 'mwei'); // Convert to human-readable format
+            await vaultContract.methods.withdraw(web3.utils.toWei(amount, "ether")).send({ from: userAccount });
+            document.getElementById('withdraw-status').innerText = "Withdrawal successful!";
         } catch (error) {
-            console.error("Error getting deposit:", error);
-            alert("Failed to get deposit! Error: " + error.message);
-            return "0";
+            console.error("Withdrawal failed", error);
+            document.getElementById('withdraw-status').innerText = "Withdrawal failed. Check console for details.";
         }
+    } else {
+        alert("Please enter a valid amount to withdraw.");
     }
 }
 
-// Event listener for DOMContentLoaded to initialize the web3
-document.addEventListener('DOMContentLoaded', () => {
-    init();
-});
-
-// Example usage in buttons:
-
-document.getElementById('approveButton').addEventListener('click', async () => {
-    const amount = document.getElementById('usdcAmount').value;
-    await approveUSDC(amount);
-});
-
-document.getElementById('depositButton').addEventListener('click', async () => {
-    const amount = document.getElementById('usdcAmount').value;
-    await depositUSDC(amount);
-});
-
-document.getElementById('checkBalanceButton').addEventListener('click', async () => {
-    const balance = await checkUSDCBalance();
-    alert("Your USDC balance is: " + balance);
-});
-
-document.getElementById('getDepositButton').addEventListener('click', async () => {
-    const deposit = await getDeposit();
-    alert("Your deposited amount is: " + deposit);
-});
+// Event listeners
+document.getElementById('connectWallet').addEventListener('click', connectWallet);
+document.getElementById('depositButton').addEventListener('click', depositUSDC);
+document.getElementById('withdrawButton').addEventListener('click', withdrawUSDC);
