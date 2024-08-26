@@ -57,31 +57,37 @@
             margin: 10px 0;
         }
     </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault DApp</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Vault dApp</h1>
-        <button onclick="connectWallet()">Connect Wallet</button>
-        <p id="wallet-address">Not connected</p>
+    <h1>Vault DApp</h1>
 
-        <h2>Deposit USDC</h2>
-        <input type="number" id="deposit-amount" placeholder="Amount in USDC">
-        <button onclick="depositUSDC(document.getElementById('deposit-amount').value)">Deposit</button>
+    <!-- Wallet Connection -->
+    <button id="connectWallet">Connect Wallet</button>
+    <p id="wallet-address">Not connected</p>
 
-        <h2>Withdraw USDC</h2>
-        <input type="number" id="withdraw-amount" placeholder="Amount in USDC">
-        <button onclick="withdrawUSDC(document.getElementById('withdraw-amount').value)">Withdraw</button>
+    <!-- Deposit Section -->
+    <div id="deposit-section" style="display: none;">
+        <input type="number" id="depositAmount" placeholder="Amount to deposit (USDC)">
+        <button id="depositButton">Deposit</button>
+        <p id="deposit-status"></p>
+    </div>
 
-        <h2>Your Info</h2>
-        <p id="user-deposit">Your Deposit: </p>
-        <p id="deposit-timestamp">Deposit Timestamp: </p>
-        <button onclick="getUserDeposit()">Get Deposit Info</button>
-        <button onclick="getUserDepositTimestamp()">Get Deposit Timestamp</button>
+    <!-- Withdrawal Section -->
+    <div id="withdraw-section" style="display: none;">
+        <input type="number" id="withdrawAmount" placeholder="Amount to withdraw (USDC)">
+        <button id="withdrawButton">Withdraw</button>
+        <p id="withdraw-status"></p>
     </div>
 
     <!-- Include Web3.js -->
-    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.5.2/dist/web3.min.js"></script>
-    <!-- Include your web3.js script -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <!-- Your custom script -->
     <script src="web3.js"></script>
 </body>
 </html>
