@@ -1,94 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vault dApp</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            text-align: center;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        input[type="number"] {
-            padding: 10px;
-            width: 100%;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        p {
-            margin: 10px 0;
-        }
-    </style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vault DApp</title>
-</head>
-<body>
-    <h1>Vault DApp</h1>
-
-    <!-- Wallet Connection -->
-    <button id="connectWallet">Connect Wallet</button>
-    <p id="wallet-address">Not connected</p>
-
-    <!-- Deposit Section -->
-    <div id="deposit-section" style="display: none;">
-        <input type="number" id="depositAmount" placeholder="Amount to deposit (USDC)">
-        <button id="depositButton">Deposit</button>
-        <p id="deposit-status"></p>
-    </div>
-
-    <!-- Withdrawal Section -->
-    <div id="withdraw-section" style="display: none;">
-        <input type="number" id="withdrawAmount" placeholder="Amount to withdraw (USDC)">
-        <button id="withdrawButton">Withdraw</button>
-        <p id="withdraw-status"></p>
-    </div>
-
+    <link rel="stylesheet" href="style.css"> <!-- Link to external CSS file -->
     <!-- Include Web3.js -->
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
     <!-- Your custom script -->
     <script src="web3.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Vault dApp</h1>
+            <p>Secure your assets with ease on the Polygon Network</p>
+        </header>
+
+        <!-- Wallet Connection Section -->
+        <div class="card">
+            <h2>Wallet Connection</h2>
+            <button id="connectWallet" class="btn">Connect Wallet</button>
+            <p id="wallet-address">Not connected</p>
+        </div>
+
+        <!-- Deposit Section -->
+        <div class="card">
+            <h2>Deposit USDC</h2>
+            <input type="number" id="depositAmount" placeholder="Enter amount in USDC" class="input-field">
+            <button id="depositButton" class="btn">Deposit</button>
+            <p id="deposit-status" class="status"></p>
+        </div>
+
+        <!-- Withdrawal Section -->
+        <div class="card">
+            <h2>Withdraw USDC</h2>
+            <input type="number" id="withdrawAmount" placeholder="Enter amount in USDC" class="input-field">
+            <button id="withdrawButton" class="btn">Withdraw</button>
+            <p id="withdraw-status" class="status"></p>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Built on Polygon Network | <a href="#">Documentation</a></p>
+        </footer>
+    </div>
 </body>
+
 </html>
